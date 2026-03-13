@@ -7,11 +7,6 @@ on:
 jobs:
   dbt-cd:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: dbt_project
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
