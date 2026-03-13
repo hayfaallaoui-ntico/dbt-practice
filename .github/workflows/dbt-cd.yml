@@ -1,11 +1,11 @@
-name: dbt CI
+name: dbt CD
 
 on:
-  pull_request:
+  push:
     branches: [main]
 
 jobs:
-  dbt-ci:
+  dbt-cd:
     runs-on: ubuntu-latest
 
     defaults:
@@ -29,32 +29,20 @@ jobs:
           mkdir -p ~/.dbt
           cat > ~/.dbt/profiles.yml <<EOF
           dbt_project:
-            target: ci
+            target: prod
             outputs:
-              ci:
+              prod:
                 type: duckdb
-                path: ci.duckdb
+                path: prod.duckdb
                 threads: 4
-                schema: ci
+                schema: prod
           EOF
 
       - name: Install dependencies
         run: dbt deps
 
       - name: Debug
-        run: dbt debug --target ci
+        run: dbt debug --target prod
 
       - name: Build
-        run: dbt build --target ci
-
-#Ce que fait cette CI
-
-#Quand tu ouvres une PR vers main :
-
-#GitHub récupère le code
-
-#installe dbt
-
-#crée un profiles.yml temporaire
-
-#exécute dbt build --target ci
+        run: dbt build --target prod

@@ -1,0 +1,20 @@
+dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/dev.duckdb
+      threads: 4
+      schema: dev
+
+    prod:
+      type: duckdb
+      path: data/prod.duckdb
+      threads: 4
+      schema: prod
+
+    ci:
+      type: duckdb
+      path: data/ci.duckdb
+      threads: 4
+      schema: ci
